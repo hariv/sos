@@ -27,22 +27,25 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
-
+    private Button buttonStart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        buttonStart = (Button) findViewById(R.id.buttonStart);
+        buttonStart.setOnClickListener(this);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 1);
 
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        /*mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager
                 .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mShakeDetector = new ShakeDetector();
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage("+919916421310", null, "Help me please, I'm being attacked.", null, null);
                 Log.d("Message", "Help me please, I'm being attacked.");
-                Log.d("Force", String.valueOf(force));
+                //Log.d("Force", String.valueOf(force));
                 Toast toast = Toast.makeText(getApplicationContext(), String.valueOf(force), Toast.LENGTH_LONG);
                 toast.show();
                 /*if(count >= 10) {
@@ -64,19 +67,25 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     Log.d("Peace podu", "machi");
-                }*/
+            /*    }
             }
-        });
+        });*/
     }
     @Override
     public void onResume() {
         super.onResume();
-        mSensorManager.registerListener(mShakeDetector, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
+        //mSensorManager.registerListener(mShakeDetector, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
     public void onPause() {
-        mSensorManager.unregisterListener(mShakeDetector);
+        //mSensorManager.unregisterListener(mShakeDetector);
         super.onPause();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.d("clicked", "button");
+        startService(new Intent(this, SOSService.class));
     }
 }

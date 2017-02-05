@@ -44,7 +44,7 @@ public class SOSService extends Service{
         mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
             @Override
             public void onShake(float x, float y, float z, float ts) {
-                Request request = new Request.Builder().url("http://pressureapp.herokuapp.com/save?name=Hari&x="+String.valueOf(x)+"&y="+String.valueOf(y)+"&z="+String.valueOf(z)+"&ts="+String.valueOf(ts)).build();
+                Request request = new Request.Builder().url("http://pressureapp.herokuapp.com/save?name=Anmol&fx="+String.valueOf(x)+"&fy="+String.valueOf(y)+"&fz="+String.valueOf(z)+"&ts="+String.valueOf(ts)).build();
                 Call call = client.newCall(request);
                 call.enqueue(new Callback() {
                     @Override
@@ -74,6 +74,7 @@ public class SOSService extends Service{
 
     @Override
     public void onDestroy() {
+        mSensorManager.unregisterListener(mShakeDetector);
         Toast.makeText(this, "Service Stopped", Toast.LENGTH_LONG).show();
     }
 }

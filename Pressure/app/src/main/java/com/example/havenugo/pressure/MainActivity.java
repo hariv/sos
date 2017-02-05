@@ -37,12 +37,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
     private Button buttonStart;
+    private Button buttonStop;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         buttonStart = (Button) findViewById(R.id.buttonStart);
+        buttonStop = (Button) findViewById(R.id.buttonStop);
         buttonStart.setOnClickListener(this);
+        buttonStop.setOnClickListener(this);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 1);
 
         /*mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -85,7 +88,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Log.d("clicked", "button");
-        startService(new Intent(this, SOSService.class));
+        switch(v.getId()) {
+            case R.id.buttonStart:
+                Log.d("clicked", "start");
+                startService(new Intent(this, SOSService.class));
+                break;
+            case R.id.buttonStop:
+                Log.d("clicked", "stop");
+                stopService(new Intent(this, SOSService.class));
+        }
+
     }
 }
